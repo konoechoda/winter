@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="5;url=/middle" />
+  <title>登录失败</title>
+  <script type="text/javascript" src="../../static/js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript">
+    window.onload = function f() {
+      var i =5;
+      var a = setInterval(function () {
+        i--;
+        if(i<=0){
+          document.getElementById("p1").innerHTML = "登录失败，返回登录界面";
+          //$("#i1").prop("disabled",false);
+          clearInterval(a);
+          location = "/middle";
+        }else {
+          document.getElementById("p1").innerHTML = "登录失败,还有"+i+"秒跳转回登录界面";
+          return false;
+        }
+      },1000)
+    }
+  </script>
+</head>
+<body>
+<p id="p1">登录失败,还有5秒跳转回登录界面</p>
+<!-- <form action="/middle" method="get">
+     <input id="i1" type="submit" value="确认" disabled="disabled">
+ </form>-->
+</body>
+</html>

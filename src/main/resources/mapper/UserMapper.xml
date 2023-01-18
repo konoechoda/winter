@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserMapper">
+    <select id="selectUserById" resultType="User" parameterType="int">
+        SELECT * from consumer where id = #{id}
+    </select>
+    <select id="selectUserByName" resultType="User" parameterType="String">
+        SELECT * from consumer where username = #{name}
+    </select>
+    <insert id="insertUser" parameterType="User">
+        insert into  consumer(username,password,create_time) values(#{name},#{password},now())
+    </insert>
+</mapper>

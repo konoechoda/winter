@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MoveListMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.MoveList" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+    </resultMap>
+
+    <resultMap id="ResultMapWithBLOBs" type="com.example.demo.domain.MoveList" extends="BaseResultMap">
+        <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,pic
+    </sql>
+
+    <sql id="Blob_Column_List">
+        id,title,pic,introduction
+    </sql>
+
+    <insert id="insert" parameterType="com.example.demo.domain.MoveList">
+        insert into move_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+            <if test="pic != null">
+                #{pic},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.example.demo.domain.MoveList">
+        update move_list
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction},
+            </if>
+            <if test="pic != null">
+                pic = #{pic},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from move_list
+        where id = #{id}
+    </delete>
+    
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select 
+        <include refid="Base_Column_List"/>
+        from move_list
+        where id=#{id}
+    </select>
+
+    <select id="allMoveList" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        from move_list
+    </select>
+
+    <select id="moveListOfTitle" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from move_list
+        where title like #{title}
+    </select>
+
+</mapper>

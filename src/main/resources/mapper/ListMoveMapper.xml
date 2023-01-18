@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.ListMoveMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.ListMove" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="move_id" jdbcType="INTEGER" property="moveId"/>
+        <result column="move_list_id" jdbcType="INTEGER" property="moveListId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,move_id,move_list_id
+    </sql>
+
+    <insert id="insert" parameterType="com.example.demo.domain.ListMove">
+        insert into list_move
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="moveId != null">
+                move_id,
+            </if>
+            <if test="moveListId != null">
+                move_list_id,
+            </if>
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="move_id != null">
+                #{moveId},
+            </if>
+            <if test="move_list_id != null">
+                #{moveListId},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.example.demo.domain.ListMove">
+        update list_move
+        <set>
+            <if test="moveId != null">
+                move_id = #{moveId},
+            </if>
+            <if test="moveListId != null">
+                move_list_id = #{moveListId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from list_move
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByMoveIdAndMoveListId" parameterType="java.util.HashMap">
+        delete from list_move
+        where moveId=#{moveId} and moveListId=#{moveListId}
+    </delete>
+    
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select 
+        <include refid="Base_Column_List"/>
+        from list_move
+        where id=#{id}
+    </select>
+
+    <select id="allListMove" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from list_move
+    </select>
+
+    <select id="listOfMoveListId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from list_move
+        where move_list_id=#{moveListId}
+    </select>
+
+
+</mapper>

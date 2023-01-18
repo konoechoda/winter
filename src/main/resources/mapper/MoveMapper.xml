@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MoveMapper">
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.Move" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="director_id" jdbcType="INTEGER" property="directorId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="upDateTime"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,director_id,username,introduction,create_time,update_time,pic,url
+    </sql>
+
+    <insert id="insert" parameterType="com.example.demo.domain.Move">
+        insert into move
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="directorId != null">
+                director_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+                create_time,update_time,
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+        </trim>
+        <trim prefix=" values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="directorId != null">
+                #{directorId},
+            </if>
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+            now(),now(),
+            <if test="pic != null">
+                #{pic},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.example.demo.domain.Move">
+        update move
+        <set>
+            <if test="directorId != null">
+                director_id = #{directorId},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction},
+            </if>
+            updata_time = now();
+            <if test="pic != null">
+                pic = #{pic},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from move
+        where id = #{id}
+    </delete>
+    
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select 
+        <include refid="Base_Column_List"/>
+        from move
+        where id=#{id}
+    </select>
+    <select id="allMove" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from move
+    </select>
+    <select id="moveOfName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from move
+        where username like #{username}
+    </select>
+    <select id="moveOfDirectorId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+            from move
+            where director_id = #{directorId}
+    </select>
+
+</mapper>

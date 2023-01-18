@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>注册失败</title>
+  <script type="text/javascript" src="../../static/js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript">
+    window.onload = function f() {
+      var i =5;
+      var a = setInterval(function () {
+        i--;
+        if(i<=0){
+          document.getElementById("p1").innerHTML = "注册失败，返回登录界面";
+          clearInterval(a);
+          location = "/Login";
+        }else {
+          document.getElementById("p1").innerHTML = "注册失败,还有"+i+"秒跳转回登录界面";
+          return false;
+        }
+      },1000)
+    }
+  </script>
+</head>
+<body>
+<p id="p1">注册失败,还有5秒跳转回登录界面</p>
+</body>
+</html>
